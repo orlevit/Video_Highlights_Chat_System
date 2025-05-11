@@ -95,7 +95,7 @@ The system reduces redundancy by:
    docker-compose up -d
    ```
 
-### Highlights view
+## 👁️ Highlights view
 
 - View video highlights: Run the following command to see the extracted video highlights from videos in `video-highlight-extractor/videos`:
 ```bash
@@ -103,5 +103,3 @@ The system reduces redundancy by:
 ```
 - Demo highlights
 View the extracted highlights from the demo videos in: **`highlights.txt`**.
-
-[MIT License](LICENSE)
