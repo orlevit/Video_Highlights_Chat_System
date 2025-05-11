@@ -88,8 +88,10 @@ class ChatService:
         
         # Add information from each highlight
         for i, highlight in enumerate(sorted_highlights):
+            video_name = highlight.video_filename
+
             # Add timestamp reference
-            time_ref = f"At {format_time(highlight.timestamp_start)}"
+            time_ref = f"Video \"{video_name}\",at {format_time(highlight.timestamp_start)}"
             
             # Add content - prefer the summary if available, otherwise use transcript
             if highlight.summary and len(highlight.summary.strip()) > 0:
