@@ -94,7 +94,8 @@ The system reduces redundancy by:
    ```bash
    docker-compose up -d
    ```
-
+5. open this address __http://localhost:8501/__ in the browser
+   
 ## 👁️ Highlights view
 
 - View video highlights: Run the following command to see the extracted video highlights from videos in `video-highlight-extractor/videos`:
