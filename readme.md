@@ -39,23 +39,23 @@ project-root/
 
 ### Video Highlight Extractor
 
-#### 1. Video Processing (Compression)
+#### Video Processing (Compression)
 The system reduces redundancy by:
 - **Frame Extraction**: Processing every frame for maximum detail
 - **Scene Detection**: Identifying significant changes between frames
 - **Grouping**: Organizing frames into coherent segments
 - **Representative Frames**: Selecting only key frames from each segment
 
-#### 2. Audio Processing
+#### Audio Processing
 - **Audio Extraction**: Separates audio track from video
 - **Speech Recognition**: Converts speech to text using Google's Speech Recognition API
 
-#### 3. LLM Integration
+#### LLM Integration
 - **Highlight Description**: Generates detailed descriptions of important moments
 - **Embedding Generation**: Creates vector embeddings for similarity search
 - **Content Summarization**: Provides concise summaries of highlights
 
-#### 4. Database Storage
+#### Database Storage
 - **PostgreSQL with pgvector**: Stores video metadata, highlights, and vector embeddings
 - **Vector Similarity Search**: Enables finding similar moments across videos
 
@@ -95,14 +95,13 @@ The system reduces redundancy by:
    docker-compose up -d
    ```
 
-### Usage
+### Highlights view
 
-#### Extracting Video Highlights
-Run the following command to see the extracted video highlights from videos in `video-highlight-extractor/videos`:
+- View video highlights: Run the following command to see the extracted video highlights from videos in `video-highlight-extractor/videos`:
 ```bash
 ./extractor_logs.sh
 ```
-
-View the extracted highlights in the file `highlights.txt`.
+- Demo highlights
+View the extracted highlights from the demo videos in: **`highlights.txt`**.
 
 [MIT License](LICENSE)
