@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: video_highlights
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
+  app:
+    build: .
+    volumes:
+      - .:/app
+      - ./videos:/app/videos
+    depends_on:
+      - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=video_highlights
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    command: python -m src.main
+
+volumes:
+  postgres_data:

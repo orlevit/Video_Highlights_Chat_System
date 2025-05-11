@@ -1,0 +1,71 @@
+services:
+  # Database service with pgvector extension
+  postgres:
+    image: ankane/pgvector:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: video_highlights
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d video_highlights"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Highlight extractor service
+  extractor:
+    build: ./video-highlight-extractor
+    volumes:
+      - ./video-highlight-extractor:/app
+      - ./video-highlight-extractor/videos:/app/videos
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=video_highlights
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    command: >
+      sh -c "
+        echo '===== STARTING VIDEO HIGHLIGHT EXTRACTION =====';
+        python -m src.main 2>&1;
+        EXIT_CODE=$?;
+        echo '===== HIGHLIGHT EXTRACTION FINISHED WITH CODE: '$EXIT_CODE' =====';
+        exit $EXIT_CODE;
+      "
+
+  # Backend API service
+  backend:
+    build: ./video-highlights-chat/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/video_highlights
+    depends_on:
+      extractor:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    restart: always
+
+  # Frontend service
+  frontend:
+    build: ./video-highlights-chat/frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  postgres_data:
