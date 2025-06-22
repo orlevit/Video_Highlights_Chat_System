@@ -2,6 +2,9 @@
 
 A comprehensive solution that automatically extracts meaningful highlights from videos and provides an interactive chat interface to explore and interact with those highlights.
 
+![Video chat demo](images/demo.gif).
+
+
 ## 📋 Overview
 
 This project combines two powerful components:
