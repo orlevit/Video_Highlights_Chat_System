@@ -2,7 +2,9 @@
 
 A comprehensive solution that automatically extracts meaningful highlights from videos and provides an interactive chat interface to explore and interact with those highlights.
 
-![Video chat demo](images/demo.gif).
+<p align="center">
+  <img src="images/demo.gif" width="600" alt="Video chat demo" />
+</p>
 
 
 ## 📋 Overview
@@ -95,7 +97,7 @@ The system reduces redundancy by:
 
 4. Start the containers:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 5. open this address __http://localhost:8501/__ in the browser
    
